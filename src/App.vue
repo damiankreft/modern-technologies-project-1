@@ -2,9 +2,28 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1>Welcome to Your Vue.js App</h1>
-    <div id="data-grid"></div>
+    <div>
+      <b-table striped hover :items="items" :fields="fields"></b-table>
+    </div>
   </div>
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        // Note `isActive` is left out and will not appear in the rendered table
+        fields: ['first_name', 'last_name', 'age'],
+        items: [
+          { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ]
+      }
+    }
+  }
+</script>
 
 <style scoped>
 #app {
