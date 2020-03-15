@@ -2,6 +2,8 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1>Welcome to Your Vue.js App</h1>
+    <h3>Damian Kreft</h3>
+    <h5>Klasa 4B</h5>
     <div>
       <b-table striped hover :items="items" :fields="fields"></b-table>
     </div>
@@ -12,7 +14,11 @@
   export default {
     data() {
       return {
-        fields: ["currency", "code", "mid"],
+        fields: [
+          { key: "currency", label: "Nazwa"},
+          { key: "code", label: "Kod "},
+          { key: "mid", label: "Kurs "},
+          ],
         items: fetchCurrency
       }
     }
