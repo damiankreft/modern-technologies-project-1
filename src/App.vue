@@ -12,17 +12,17 @@
   export default {
     data() {
       return {
-        // Note `isActive` is left out and will not appear in the rendered table
-        fields: ['id', 'name', 'username', 'email'],
-        items: fetchUsers
+        fields: ["currency", "code", "mid"],
+        items: fetchCurrency
       }
     }
   }
 
-  function fetchUsers() {
-    const baseURI = 'https://jsonplaceholder.typicode.com/users'
+  function fetchCurrency() {
+    const baseURI = 'http://api.nbp.pl/api/exchangerates/tables/a?format=JSON'
     this.$http.get(baseURI).then((result) => {
-      this.items = result.data
+      //this.items = result.data.rates
+      this.items = result.data[0].rates
     })
   }
 </script>
