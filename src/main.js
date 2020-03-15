@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -10,16 +11,21 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
+Vue.prototype.$http = axios
 
 new Vue({
   render: h => h(App),
   data: {
-    users: [
-      { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-      { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-      { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-      { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-    ]
+    users: []
+  },
+  methods: {
+    fetchUsers: function () {
+      const baseURI = 'https://jsonplaceholder.typicode.com/users'
+      this.$http.get(baseURI)
+      .then((result) => {
+        this.users = result.data
+      })
+    }
   }
 }).$mount('#app')
 
