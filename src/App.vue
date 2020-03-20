@@ -1,40 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1>Welcome to Your Vue.js App</h1>
-    <h3>Damian Kreft</h3>
-    <h5>Klasa 4B</h5>
-    <div>
-      <b-table striped hover :items="items" :fields="fields"></b-table>
-    </div>
+  <div id='app'>
+    <currency-table />
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        fields: [
-          { key: "currency", label: "Nazwa"},
-          { key: "code", label: "Kod "},
-          { key: "mid", label: "Kurs "},
-          ],
-        items: fetchCurrency
-      }
-    }
-  }
+import CurrencyTable from './views/CurrencyTable';
 
-  function fetchCurrency() {
-    const baseURI = 'http://api.nbp.pl/api/exchangerates/tables/a?format=JSON'
-    this.$http.get(baseURI).then((result) => {
-      //this.items = result.data.rates
-      this.items = result.data[0].rates
-    })
-  }
+export default {
+  components: {
+    CurrencyTable,
+  },
+};
 </script>
 
-<style scoped>
+<style>
 #app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
