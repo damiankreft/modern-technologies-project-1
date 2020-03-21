@@ -2,11 +2,10 @@ import Vue from 'vue';
 import axios from 'axios';
 import App from './App.vue';
 
-Vue.prototype.$nbpApi = axios.create({ // Tworzymy instancję axiosa i przypisujemy do globalnego prototypu
-  baseURL: 'https://api.nbp.pl/api/', // Podajemy domyślny adres do API, żeby go nie powtarzać łącząc się
-                                      // z różnych miejsc naszej aplikacji
-  headers: { // Nagłowki służą do tego, aby przekazać dodatkowe informacje serwerowy
-    Accept: 'application/json', // Tutaj informujemy, że wolimy JSON zamiast domyślnego XMLa
+Vue.prototype.$nbpApi = axios.create({
+  baseURL: 'https://api.nbp.pl/api/',
+  headers: {
+    Accept: 'application/json',
   },
 });
 Vue.config.productionTip = false;

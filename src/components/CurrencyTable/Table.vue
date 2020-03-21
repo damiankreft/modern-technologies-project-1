@@ -2,15 +2,13 @@
   <table>
     <thead>
     <tr>
-      <th>Nazwa waluty</th>
-      <th>Kod waluty</th>
-      <th>Obecny kurs</th>
+      <th>Currency</th>
+      <th>Code</th>
+      <th>Rate</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Tutaj będziemy robić sztuczkę, czyli od razu na danym komponencie wbijemy pętlę i on będzie się automatycznie
-         powtarzał dopóki są elementy w tablicy bazowej -->
-    <item v-for='currency in data' :key=currency.code v-bind=currency />
+      <item class="table-item" v-for='currency in data' :key=currency.code v-bind=currency />
     </tbody>
   </table>
 </template>
@@ -23,11 +21,34 @@ export default {
     Item,
   },
   props: {
-    // Własność (ang. Property, w skrócie "props") to własność komponentu, czyli element, który musii/może przyjąć
-    //  aby nim manipulować. Stosuje się je w celu podpowiedzi czego dany komponent oczekuje.
-    // Niestety, nie można wypisywać "szczegółów" danej własności, dlatego tutaj podajemy tylko, że oczekujemy tablicy
-    //  elementów, natomiast w komponencie `Item` rozbijamy to na konkretne wartości z określonymi typami.
-    data: { type: Array, required: true },
+    data: { type: Array, required: true, },
   },
 };
 </script>
+
+<style scoped>
+table {
+  width: 90%;
+  margin: 20px auto;
+}
+
+th {
+  padding: 14px;
+  background-color:lightseagreen;
+}
+
+.table-item:nth-child(odd) {
+  background-color: teal;
+  color: white;
+}
+
+.table-item:nth-child(even) {
+  background-color: #d9d9d9;
+  color: black;
+}
+
+.table-item:nth-child(odd):hover, .table-item:nth-child(even):hover {
+  color: white;
+  background-color: darkslategrey;
+}
+</style>

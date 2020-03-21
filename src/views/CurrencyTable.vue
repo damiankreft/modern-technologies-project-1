@@ -1,45 +1,51 @@
 <template>
-  <!-- Tutaj komponent MickeyMouse możemy wywołać jako <MickeyMouse> ale dobrą praktyką jest zamienić to na małe litery
-       rozdzielone myślnikami, czyli <mickey-mouse> -->
-  <mickey-mouse :data=currencies />
+  <div style="width: ">
+    <currency-table-searchbox :query.sync='userInput' />
+    <currency-table-record-counter :recordsCount='this.countCurrencies' />
+    <currency-table :data=processCurrencies />
+  </div>
 </template>
 
 <script>
-// Zwróć uwagę, że nazwa pliku może być inna niż nazwa importu, ale niżej musimy konsekwentnie nazwać tak samo komponent
-import MickeyMouse from '../components/CurrencyTable/Table';
+import CurrencyTable from '../components/CurrencyTable/Table';
+import CurrencyTableSearchbox from '../components/CurrencyTable/SearchBox';
+import CurrencyTableRecordCounter from '../components/CurrencyTable/RecordCounter'
 
 export default {
   components: {
-    MickeyMouse,
+    CurrencyTable,
+    CurrencyTableSearchbox,
+    CurrencyTableRecordCounter,
   },
-  data: () => ({ // Jest to tzw. "fat arrow", czyli odpowiednik function, patrz poniższy przykład
+  mounted() {
+    this.$nbpApi.get('exchangerates/tables/a')
+      .then((res) => res.data[0].rates.forEach(v => this.currencies.push(v)))
+      .catch((err) => console.log(`Unexpected error: ${err}`));
+  },
+  data: () => ({
     currencies: [
-      { code: 'PLN', currency: 'złoty polski', mid: 1 },
-      { code: 'EUR', currency: 'euro', mid: 4.39 },
-      { code: 'PLN', currency: 'złoty polski', mid: 1 },
-      { code: 'USD', currency: 'dolar amerykański', mid: 3.92 },
-      { code: 'PLN', currency: 'złoty polski', mid: 1 },
-      { code: 'PLN', currency: 'złoty polski', mid: 1 }, // Zwróć uwagę co się dzieje gdy wpisy się powtarzają
+      { code: "PLN", currency: "złoty polski", mid: 1 },
     ],
+    userInput: "",
   }),
-  /**
-   * Który zapis jest najwygodniejszy?
-   *
-   * function () {           vs     () => ({              vs     () => ({ currencies: [] })
-   *   return {                       currencies: [],
-   *     currencies: [],            })
-   *   };
-   * }
-   *
-   * Zauważ, że zapisy środowy i prawy są takie same, kwestia formatowania.
-   */
-  mounted() { // To jest funkcja wywoływana po "zamontowaniu" elementu w DOMie strony
-    this.$nbpApi.get('exchangerates/tables/a') // Tutaj wywołujemy zapytanie o tabelę kursów, otrzymujemy Promisę
-      .then((res) => { this.currencies = res.data[0].rates; }) // Tutaj rozwiązujemy Promisę w przypadku powodzenia
-      .catch((err) => console.log(`Coś się zepsuło?! ${err}`)); // Tutaj rozwiązujemy Promisę gdy nastąpi błąd
+  computed: {
+    processCurrencies: function() {
+      return this.filterCurrencies.sort(this.sortCurrencies);
+    },
+    countCurrencies: function () {
+      return this.processCurrencies.length;
+    },
+    filterCurrencies: function () {
+      return this.currencies.filter(this.filterModels(this.userInput));
+    },
   },
-  /**
-   * Zwróć uwagę co się stało z wpisami podanymi wyżej.
-   */
-};
+  methods: {
+      sortCurrencies: function(a, b) {
+            return a.code > b.code ? 1: -1;
+      },
+      filterModels: function (query) {
+        return (item) => item.currency.includes(query);
+      },
+  },
+}
 </script>
