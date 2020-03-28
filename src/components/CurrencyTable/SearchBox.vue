@@ -7,7 +7,6 @@
     </div>
 </template>
 <script>
-// Jebane gówno https://vuejs.org/v2/guide/components-custom-events.html#sync-Modifier
 export default {
     props: {
         query: { type: String, required: true, },
