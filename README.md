@@ -1,24 +1,7 @@
-# nowoczesne-technologie-projekt-1
+# School project on the subject of `Modern Technologies`
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### Fetch `Currency Exchange Rates` from `http://api.nbp.pl/api/exchangerates/table/A` using JSON.
+#### Load data into a table.
+#### I have created `SearchBox` component, which is used along with Table component
+#### Add simple Sorting by `Currency Code`. 
+#### Add `row counter component`.
